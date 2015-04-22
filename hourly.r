@@ -18,6 +18,8 @@ categories <- factor(c("Sleep", "Creative Work", "Day Job/Admin",
                      ordered=TRUE)
 hrs <- c(1:24)
 hrs.lab <- c(paste(c(12, 1:11), "am", sep=""), paste(c(12, 1:11), "pm", sep=""))
+## doing the scale this way is morally wrong, but I'm in a hurry
+tps <- round(seq(0, 300, length.out=24),0)
 
 ### Generate daily routines of famous people
 make.my.day <- function(person){
@@ -31,9 +33,6 @@ out <- sapply(sample(famous.people$Name, 10, replace=TRUE), make.my.day, simplif
 days.df <- do.call(rbind, out)
 
 ### Make a plot
-## doing the scale this way is morally wrong, but I'm in a hurry
-tps <- round(seq(0, 300, length.out=24),0)
-
 p <- ggplot(days.df, aes(x=Person, y=Hour, fill=Activity))
 p + geom_bar(stat="identity") + coord_flip() + labs(x="", y="") +
     scale_fill_manual(values = cb.palette) +
